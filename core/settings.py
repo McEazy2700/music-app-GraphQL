@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# os.environ.get('SECRET_KEY')
-SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,12 +35,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "jet.dashboard",
     "jet",
+    "cloudinary_storage",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary",
     "eazy_user",
     "graphene_django",
     "music_gallery",
@@ -143,7 +145,14 @@ AUTH_USER_MODEL = "eazy_user.EmailUser"
 GRAPHENE = {"SCHEMA": "core.schema.schema"}
 
 CORS_ALLOW_ALL_ORIGINS = True
+# Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('API_KEY'),
+    'API_SECRET': os.environ.get('API_SECRET')
+}
 
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.VideoMediaCloudinaryStorage"
 # CORS_ALLOWED_ORIGINS = [
 #     "*",
 #         "http://localhost:3000",

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from cloudinary_storage.storage import MediaCloudinaryStorage
+
 # Create your models here.
 
 
@@ -22,7 +24,7 @@ class Genre(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="uploads/artists", null=True, blank=True)
+    image = models.ImageField(upload_to="uploads/artists", null=True, blank=True, storage=MediaCloudinaryStorage)
     date_added = models.DateTimeField(editable=False)
     last_updated = models.DateTimeField(editable=False)
 
@@ -45,7 +47,7 @@ class Artist(models.Model):
 
 class Album(models.Model):
     title = models.CharField(max_length=255)
-    cover_photo = models.ImageField(upload_to="uploads/albums", null=True, blank=True)
+    cover_photo = models.ImageField(upload_to="uploads/albums", null=True, blank=True, storage=MediaCloudinaryStorage)
     artist = models.ForeignKey(
         Artist, on_delete=models.PROTECT, related_name="albums", null=True, blank=True
     )
@@ -77,7 +79,7 @@ class Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.PROTECT, null=True, blank=True)
     music = models.FileField(upload_to="uploads/songs")
     genre = models.ManyToManyField(Genre, blank=True)
-    cover_photo = models.ImageField(upload_to='uploads/songs/images', null=True, blank=True)
+    cover_photo = models.ImageField(upload_to='uploads/songs/images', null=True, blank=True, storage=MediaCloudinaryStorage)
     artist = models.ForeignKey(
         Artist, on_delete=models.PROTECT, related_name="songs", null=True, blank=True
     )
