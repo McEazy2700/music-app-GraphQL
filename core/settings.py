@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-os.environ.get('SECRET_KEY')
-# SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
+# os.environ.get('SECRET_KEY')
+SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     "eazy_user",
     "graphene_django",
     "music_gallery",
-    'accounts',
+    "accounts",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -139,3 +141,12 @@ AUTH_USER_MODEL = "eazy_user.EmailUser"
 
 # Graphene
 GRAPHENE = {"SCHEMA": "core.schema.schema"}
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "*",
+#         "http://localhost:3000",
+#         "https://studio.apollographql.com",
+#         "https://3000-mceazy2700-nextjsmusica-aidpc9o75jt.ws-eu64.gitpod.io/"
+#     ]
