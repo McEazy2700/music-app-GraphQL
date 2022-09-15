@@ -34,6 +34,7 @@ class AlbumNode(DjangoObjectType):
 
 
 class SongNode(DjangoObjectType):
+
     class Meta:
         model = Song
         filter_fields = {
@@ -44,3 +45,5 @@ class SongNode(DjangoObjectType):
             "featured_artist__name": ["icontains", "istartswith"],
         }
         interfaces = (graphene.relay.Node,)
+
+
