@@ -34,7 +34,7 @@ class AlbumNode(DjangoObjectType):
 
 
 class SongNode(DjangoObjectType):
-
+    url = graphene.String(required=True)
     class Meta:
         model = Song
         filter_fields = {
@@ -46,4 +46,5 @@ class SongNode(DjangoObjectType):
         }
         interfaces = (graphene.relay.Node,)
 
-
+    def resolve_url(root, info, **kwargs):
+        return root.get_music_url

@@ -1,7 +1,5 @@
 from django.db import models
-from django.db.models.signals import pre_save
 from django.utils import timezone
-from django.dispatch import receiver
 
 
 
@@ -82,7 +80,6 @@ class Song(models.Model):
     title = models.CharField(max_length=255)
     album = models.ForeignKey(Album, on_delete=models.PROTECT, null=True, blank=True)
     song = models.FileField(upload_to="uploads/songs", null=True, blank=True)
-    song_url = models.URLField(null=True, blank=True)
     genre = models.ManyToManyField(Genre, blank=True)
     cover_photo = models.ImageField(upload_to='uploads/songs/images', null=True, blank=True, storage=MediaCloudinaryStorage)
     artist = models.ForeignKey(
@@ -113,8 +110,8 @@ class Song(models.Model):
 
     @property
     def get_music_url(self):
-        if self.music and hasattr(self.music, 'url'):
-            return self.music.url
+        if self.song and hasattr(self.song, 'url'):
+            return self.song.url
         return None
 
     @property
@@ -122,9 +119,3 @@ class Song(models.Model):
         if self.cover_photo and hasattr(self.cover_photo, 'url'):
             return self.cover_photo.url
         return None
-
-
-@receiver(pre_save, sender=Song)
-def music_updat_or_create_handler(sender, instance, **kwargs):
-    instance.song_url = instance.song.url
-    return
