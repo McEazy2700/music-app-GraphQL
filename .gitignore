@@ -2,6 +2,9 @@
 static
 db.sqlite3
 __pycache__
-.env
+.env/
 .env.swp
-
+.venv/
+.env
+.git/
+.gitignore/
