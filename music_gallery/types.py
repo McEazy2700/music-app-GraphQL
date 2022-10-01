@@ -58,5 +58,5 @@ class SongNode(DjangoObjectType):
     def resolve_url(root, info, **kwargs):
         return root.get_music_url
 
-    def reslove_photo_url(root, info, **kwargs):
+    def resolve_photo_url(root, info, **kwargs):
         return root.get_image_url
