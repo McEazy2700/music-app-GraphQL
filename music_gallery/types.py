@@ -21,6 +21,8 @@ class ArtistNode(DjangoObjectType):
 
 
 class AlbumNode(DjangoObjectType):
+    album_id = graphene.ID()
+    photo_url = graphene.String()
     class Meta:
         model = Album
         filter_fields = {
@@ -32,9 +34,16 @@ class AlbumNode(DjangoObjectType):
         }
         interfaces = (graphene.relay.Node,)
 
+    def resolve_album_id(root, info, **kwargs):
+        return root.id
+
+    def resolve_photo_url(root, info, **kwargs):
+        return root.get_url
+
 
 class SongNode(DjangoObjectType):
     url = graphene.String(required=True)
+    photo_url = graphene.String()
     class Meta:
         model = Song
         filter_fields = {
@@ -48,3 +57,6 @@ class SongNode(DjangoObjectType):
 
     def resolve_url(root, info, **kwargs):
         return root.get_music_url
+
+    def reslove_photo_url(root, info, **kwargs):
+        return root.get_image_url
