@@ -14,10 +14,18 @@ class GenreNode(DjangoObjectType):
 
 
 class ArtistNode(DjangoObjectType):
+    artist_id = graphene.ID()
+    photo_url = graphene.String()
     class Meta:
         model = Artist
         filter_fields = {"name": ["icontains", "istartswith", "exact"]}
         interfaces = (graphene.relay.Node,)
+
+    def resolve_photo_url(self, info, **kwargs):
+        return self.get_url
+
+    def resolve_artist_id(self, info, **kwargs):
+        return self.id
 
 
 class AlbumNode(DjangoObjectType):
@@ -34,11 +42,11 @@ class AlbumNode(DjangoObjectType):
         }
         interfaces = (graphene.relay.Node,)
 
-    def resolve_album_id(root, info, **kwargs):
-        return root.id
+    def resolve_album_id(self, info, **kwargs):
+        return self.id
 
-    def resolve_photo_url(root, info, **kwargs):
-        return root.get_url
+    def resolve_photo_url(self, info, **kwargs):
+        return self.get_url
 
 
 class SongNode(DjangoObjectType):
@@ -51,12 +59,13 @@ class SongNode(DjangoObjectType):
             "title": ["icontains", "istartswith"],
             "genre__title": ["icontains", "istartswith"],
             "artist__name": ["icontains", "istartswith"],
+            "album__id": ["exact"],
             "featured_artist__name": ["icontains", "istartswith"],
         }
         interfaces = (graphene.relay.Node,)
 
-    def resolve_url(root, info, **kwargs):
-        return root.get_music_url
+    def resolve_url(self, info, **kwargs):
+        return self.get_music_url
 
-    def resolve_photo_url(root, info, **kwargs):
-        return root.get_image_url
+    def resolve_photo_url(self, info, **kwargs):
+        return self.get_image_url
