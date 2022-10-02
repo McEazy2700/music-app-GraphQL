@@ -34,13 +34,13 @@ ALLOWED_HOSTS = ['127.0.0.1:8000', 'music-app-graphql-production.up.railway.app'
 INSTALLED_APPS = [
     "jet.dashboard",
     "jet",
-    "cloudinary_storage",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
     "cloudinary",
     "eazy_user",
     "graphene_django",
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -133,9 +134,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
