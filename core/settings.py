@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("IS_DEV") == 'True'
 
 ALLOWED_HOSTS = ['127.0.0.1:8000', 'music-app-graphql-production.up.railway.app']
 
