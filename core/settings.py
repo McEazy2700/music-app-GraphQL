@@ -11,20 +11,16 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
-import environ
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-env = environ.Env()
-environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECRET_KEY = "django-insecure-xskue1f!-$*fmf*415!v0ma$=_21&t!mgia^yz30*f@%fd90%m"
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -88,13 +84,18 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
+DATABASE_URL = os.environ.get("DB_URL")
+DB_CONFIG = dj_database_url.config(default=DATABASE_URL)
+DATABASES = {
+    "default": DB_CONFIG
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -151,15 +152,10 @@ GRAPHENE = {"SCHEMA": "core.schema.schema"}
 CORS_ALLOW_ALL_ORIGINS = True
 # Cloudinary
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUD_NAME'),
-    'API_KEY': env('API_KEY'),
-    'API_SECRET': env('API_SECRET')
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('API_KEY'),
+    'API_SECRET': os.environ.get('API_SECRET')
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.VideoMediaCloudinaryStorage"
-# CORS_ALLOWED_ORIGINS = [
-#     "*",
-#         "http://localhost:3000",
-#         "https://studio.apollographql.com",
-#         "https://3000-mceazy2700-nextjsmusica-aidpc9o75jt.ws-eu64.gitpod.io/"
-#     ]
+
