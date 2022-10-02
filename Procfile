@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic --upload-unhashed-files && gunicorn core.wsgi 
+web: python manage.py migrate && python manage.py collectstatic --no-input --upload-unhashed-files && gunicorn core.wsgi 
